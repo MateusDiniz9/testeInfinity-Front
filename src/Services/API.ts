@@ -16,7 +16,7 @@ interface Auth {
   token: string;
 }
 
-interface getTasks {
+interface TasKsParams {
   userId: number;
 }
 
@@ -25,11 +25,13 @@ interface NewTask {
   description: string;
   status: 'DONE' | 'TODO' | 'INPROGRESS';
   priority: 'LOW' | 'MEDIUM' | 'HIGH';
-  userId: number; // Adicione o ID do usuário à nova tarefa
+  userId: number;
 }
 
 interface TaskUpdate {
   id: number;
+  title: string;
+  description: string;
   status: 'DONE' | 'TODO' | 'INPROGRESS';
   priority?: 'LOW' | 'MEDIUM' | 'HIGH';
 }
@@ -57,7 +59,7 @@ function getToken(): string | null {
   }
 }
 
-function getTasks(params: getTasks) {
+function getTasks(params: TasKsParams) {
   return axios.get(`${BASE_URL}tasks`, { params });
 }
 
@@ -67,6 +69,8 @@ function addTask(newTask: NewTask) {
 
 function updateTaskStatus(taskUpdate: TaskUpdate) {
   return axios.put(`${BASE_URL}tasks/${taskUpdate.id}`, {
+    title: taskUpdate.title,
+    description: taskUpdate.description,
     status: taskUpdate.status,
     priority: taskUpdate.priority,
   });
