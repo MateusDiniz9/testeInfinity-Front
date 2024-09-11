@@ -60,24 +60,48 @@ function getToken(): string | null {
 }
 
 function getTasks(params: TasKsParams) {
-  return axios.get(`${BASE_URL}tasks`, { params });
-}
-
-function addTask(newTask: NewTask) {
-  return axios.post(`${BASE_URL}tasks`, newTask);
-}
-
-function updateTaskStatus(taskUpdate: TaskUpdate) {
-  return axios.put(`${BASE_URL}tasks/${taskUpdate.id}`, {
-    title: taskUpdate.title,
-    description: taskUpdate.description,
-    status: taskUpdate.status,
-    priority: taskUpdate.priority,
+  const token = getToken();
+  return axios.get(`${BASE_URL}tasks`, {
+    params,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 }
 
+function addTask(newTask: NewTask) {
+  const token = getToken();
+  return axios.post(`${BASE_URL}tasks`, newTask, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+function updateTaskStatus(taskUpdate: TaskUpdate) {
+  const token = getToken();
+  return axios.put(
+    `${BASE_URL}tasks/${taskUpdate.id}`,
+    {
+      title: taskUpdate.title,
+      description: taskUpdate.description,
+      status: taskUpdate.status,
+      priority: taskUpdate.priority,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
 function deleteTask(taskId: number) {
-  return axios.delete(`${BASE_URL}tasks/${taskId}`);
+  const token = getToken();
+  return axios.delete(`${BASE_URL}tasks/${taskId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
 
 export {
