@@ -96,7 +96,7 @@ const TaskItem = styled.li<TaskItemProps>`
   }
 `;
 
-const getPriorityColor = (priority: 'LOW' | 'MEDIUM' | 'HIGH') => {
+export const getPriorityColor = (priority: 'LOW' | 'MEDIUM' | 'HIGH') => {
   switch (priority) {
     case 'LOW':
       return '#d3ffd3';
